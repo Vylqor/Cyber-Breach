@@ -15,7 +15,7 @@ void clearScreen() {
 }
 
 void waitForEnter() {
-    cout << "\nAppuie sur ENTREE pour continuer...";
+    cout << "\nPress ENTER to continue...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 }
@@ -57,15 +57,15 @@ struct Enemy {
 };
 
 void showStats(const Player& player) {
-    cout << "\n=========== TON PROFIL ===========\n";
-    cout << " Hacker      : " << player.name << endl;
-    cout << " Niveau      : " << player.level << endl;
-    cout << " XP          : " << player.xp << "/" << player.xpNeeded << endl;
-    cout << " HP          : " << player.hp << "/" << player.maxHp << endl;
-    cout << " Puissance   : " << player.attack << endl;
-    cout << " Firewall    : " << player.firewall << endl;
-    cout << " CryptoCoins : " << player.money << endl;
-    cout << "==================================\n";
+    cout << "\n=========== YOUR PROFILE ===========\n";
+    cout << " Hacker       : " << player.name << endl;
+    cout << " Level        : " << player.level << endl;
+    cout << " XP           : " << player.xp << "/" << player.xpNeeded << endl;
+    cout << " HP           : " << player.hp << "/" << player.maxHp << endl;
+    cout << " Attack Power : " << player.attack << endl;
+    cout << " Firewall     : " << player.firewall << endl;
+    cout << " CryptoCoins  : " << player.money << endl;
+    cout << "====================================\n";
 }
 
 void levelUp(Player& player) {
@@ -80,12 +80,12 @@ void levelUp(Player& player) {
 
         cout << "\n==================================\n";
         cout << "          !!! LEVEL UP !!!\n";
-        cout << "      Tu es maintenant niveau " << player.level << " !\n";
+        cout << "      You are now level " << player.level << "!\n";
         cout << "==================================\n";
 
-        cout << "+20 HP max\n";
-        cout << "+5 puissance\n";
-        cout << "HP entierement restaure\n";
+        cout << "+20 Max HP\n";
+        cout << "+5 Attack Power\n";
+        cout << "HP fully restored\n";
     }
 }
 
@@ -96,16 +96,16 @@ Enemy generateEnemy(int level) {
 
     switch (type) {
         case 0:
-            enemy.name = "Firewall basique";
+            enemy.name = "Basic Firewall";
             break;
         case 1:
-            enemy.name = "Antivirus Sentinel";
+            enemy.name = "Sentinel Antivirus";
             break;
         case 2:
-            enemy.name = "Systeme IDS";
+            enemy.name = "IDS System";
             break;
         case 3:
-            enemy.name = "Agent de securite";
+            enemy.name = "Security Agent";
             break;
         default:
             enemy.name = "AI Defender";
@@ -126,10 +126,10 @@ void fight(Player& player) {
 
     Enemy enemy = generateEnemy(player.level);
 
-    cout << "ALERTE : Systeme detecte !\n\n";
-    cout << "Cible : " << enemy.name << endl;
-    cout << "Integrite systeme : " << enemy.hp << endl;
-    cout << "Puissance defensive : " << enemy.attack << endl;
+    cout << "WARNING: Security system detected!\n\n";
+    cout << "Target          : " << enemy.name << endl;
+    cout << "System Integrity: " << enemy.hp << endl;
+    cout << "Defense Power   : " << enemy.attack << endl;
 
     waitForEnter();
 
@@ -137,29 +137,37 @@ void fight(Player& player) {
         clearScreen();
         title();
 
-        cout << "=== COMBAT ===\n\n";
+        cout << "=========== BATTLE ===========\n\n";
 
-        cout << player.name << " HP: " << player.hp << "/" << player.maxHp << endl;
+        cout << player.name << " HP: " << player.hp
+             << "/" << player.maxHp << endl;
+
         cout << enemy.name << " HP: " << enemy.hp << endl;
 
-        cout << "\n1. Attaque SQL Injection\n";
-        cout << "2. DDoS\n";
-        cout << "3. Exploit zero-day\n";
-        cout << "4. Fuir\n";
+        cout << "\n1. SQL Injection\n";
+        cout << "2. DDoS Attack\n";
+        cout << "3. Zero-Day Exploit\n";
+        cout << "4. Escape\n";
 
-        cout << "\nCommande > ";
+        cout << "\nCommand > ";
 
         int choice;
         cin >> choice;
 
         if (choice == 1) {
             int damage = player.attack + rand() % 10;
-            cout << "\nInjection reussie ! -" << damage << " HP\n";
+
+            cout << "\nInjection successful! -" << damage
+                 << " system integrity\n";
+
             enemy.hp -= damage;
         }
         else if (choice == 2) {
             int damage = player.attack + 10 + rand() % 15;
-            cout << "\nDDoS lance ! -" << damage << " HP\n";
+
+            cout << "\nDDoS attack launched! -" << damage
+                 << " system integrity\n";
+
             enemy.hp -= damage;
         }
         else if (choice == 3) {
@@ -167,26 +175,29 @@ void fight(Player& player) {
 
             if (chance < 40) {
                 int damage = player.attack * 3;
-                cout << "\n!!! ZERO-DAY TROUVE !!!\n";
-                cout << "CRITICAL HIT ! -" << damage << " HP\n";
+
+                cout << "\n!!! ZERO-DAY FOUND !!!\n";
+                cout << "CRITICAL HIT! -" << damage
+                     << " system integrity\n";
+
                 enemy.hp -= damage;
             } else {
-                cout << "\nExploit bloque par le systeme...\n";
+                cout << "\nThe exploit was blocked by the system...\n";
             }
         }
         else if (choice == 4) {
             int chance = rand() % 100;
 
             if (chance < 50) {
-                cout << "\nTu as reussi a disparaitre du reseau !\n";
+                cout << "\nYou successfully disappeared from the network!\n";
                 waitForEnter();
                 return;
             } else {
-                cout << "\nImpossible de fuir ! Ton IP est tracee !\n";
+                cout << "\nEscape failed! Your IP has been traced!\n";
             }
         }
         else {
-            cout << "\nCommande invalide !\n";
+            cout << "\nInvalid command!\n";
             waitForEnter();
             continue;
         }
@@ -205,11 +216,11 @@ void fight(Player& player) {
 
         if (rand() % 100 < 20) {
             realDamage += 10;
-            cout << "\n!!! CONTRE-ATTAQUE CRITIQUE !!!\n";
+            cout << "\n!!! CRITICAL COUNTERATTACK !!!\n";
         }
 
-        cout << enemy.name << " attaque ton systeme !\n";
-        cout << "Tu perds " << realDamage << " HP.\n";
+        cout << enemy.name << " attacks your system!\n";
+        cout << "You lose " << realDamage << " HP.\n";
 
         player.hp -= realDamage;
 
@@ -227,18 +238,19 @@ void fight(Player& player) {
         cout << "\n====================================\n";
         cout << "           SYSTEM FAILURE\n";
         cout << "====================================\n";
-        cout << "\nTon systeme a ete compromis...\n";
-        cout << "Tes donnees ont ete chiffrees.\n";
-        cout << "Connexion perdue.\n";
+
+        cout << "\nYour system has been compromised...\n";
+        cout << "Your data has been encrypted.\n";
+        cout << "Connection lost.\n";
 
         player.hp = player.maxHp;
         player.money /= 2;
 
-        cout << "\nTu as perdu la moitie de tes CryptoCoins.\n";
+        cout << "\nYou lost half of your CryptoCoins.\n";
     }
     else {
         cout << "\n====================================\n";
-        cout << "         SYSTEME COMPROMIS !\n";
+        cout << "         SYSTEM COMPROMISED!\n";
         cout << "====================================\n";
 
         cout << "\n+" << enemy.rewardXp << " XP\n";
@@ -261,14 +273,14 @@ void shop(Player& player) {
         title();
 
         cout << "=========== DARK WEB SHOP ===========\n";
-        cout << "CryptoCoins disponibles : " << player.money << "\n\n";
+        cout << "Available CryptoCoins: " << player.money << "\n\n";
 
-        cout << "1. Restaurer 30 HP        [20 coins]\n";
-        cout << "2. +5 Puissance           [60 coins]\n";
-        cout << "3. +2 Firewall            [50 coins]\n";
-        cout << "4. Retour\n";
+        cout << "1. Restore 30 HP        [20 coins]\n";
+        cout << "2. +5 Attack Power      [60 coins]\n";
+        cout << "3. +2 Firewall          [50 coins]\n";
+        cout << "4. Return\n";
 
-        cout << "\nChoix > ";
+        cout << "\nChoice > ";
         cin >> choice;
 
         switch (choice) {
@@ -281,10 +293,11 @@ void shop(Player& player) {
                         player.hp = player.maxHp;
                     }
 
-                    cout << "\nSysteme repare !\n";
+                    cout << "\nSystem repaired successfully!\n";
                 } else {
-                    cout << "\nPas assez de CryptoCoins.\n";
+                    cout << "\nNot enough CryptoCoins.\n";
                 }
+
                 waitForEnter();
                 break;
 
@@ -293,10 +306,11 @@ void shop(Player& player) {
                     player.money -= 60;
                     player.attack += 5;
 
-                    cout << "\nPuissance augmentee !\n";
+                    cout << "\nAttack power upgraded!\n";
                 } else {
-                    cout << "\nPas assez de CryptoCoins.\n";
+                    cout << "\nNot enough CryptoCoins.\n";
                 }
+
                 waitForEnter();
                 break;
 
@@ -305,10 +319,11 @@ void shop(Player& player) {
                     player.money -= 50;
                     player.firewall += 2;
 
-                    cout << "\nFirewall ameliore !\n";
+                    cout << "\nFirewall upgraded!\n";
                 } else {
-                    cout << "\nPas assez de CryptoCoins.\n";
+                    cout << "\nNot enough CryptoCoins.\n";
                 }
+
                 waitForEnter();
                 break;
 
@@ -316,7 +331,7 @@ void shop(Player& player) {
                 break;
 
             default:
-                cout << "\nChoix invalide.\n";
+                cout << "\nInvalid choice.\n";
                 waitForEnter();
         }
 
@@ -331,12 +346,11 @@ int main() {
     clearScreen();
     title();
 
-    cout << "Initialisation du terminal...\n";
-    cout << "Connexion au reseau Tor...\n";
-    cout << "VPN actif...\n";
-    cout << "Proxy chain active...\n\n";
+    cout << "Initializing terminal...\n";
+    cout << "Connecting to the network...\n";
+    cout << "Secure connection established.\n\n";
 
-    cout << "Entre ton pseudo de hacker : ";
+    cout << "Enter your hacker alias: ";
     getline(cin, player.name);
 
     if (player.name.empty()) {
@@ -349,14 +363,14 @@ int main() {
         clearScreen();
         title();
 
-        cout << "Bienvenue, " << player.name << ".\n";
-        cout << "Statut : CONNECTED\n";
+        cout << "Welcome, " << player.name << ".\n";
+        cout << "Status: CONNECTED\n";
 
         cout << "\n=========== MENU ===========\n";
-        cout << "1. Lancer une attaque\n";
-        cout << "2. Voir mon profil\n";
+        cout << "1. Launch an attack\n";
+        cout << "2. View profile\n";
         cout << "3. Dark Web Shop\n";
-        cout << "4. Quitter\n";
+        cout << "4. Quit\n";
 
         cout << "\nroot@" << player.name << ":~$ ";
 
@@ -381,13 +395,13 @@ int main() {
             case 4:
                 clearScreen();
                 title();
-                cout << "Deconnexion en cours...\n";
-                cout << "Effacement des logs...\n";
+                cout << "Disconnecting...\n";
+                cout << "Clearing terminal logs...\n";
                 cout << "Goodbye, " << player.name << ".\n";
                 break;
 
             default:
-                cout << "\nCommande inconnue.\n";
+                cout << "\nUnknown command.\n";
                 waitForEnter();
         }
 

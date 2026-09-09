@@ -58,7 +58,7 @@ sudo dnf install gcc-c++ make
 If you have Git installed:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/Kaezuria/Cyber-Breach.git
 cd Cyber-Breach
 ```
 
